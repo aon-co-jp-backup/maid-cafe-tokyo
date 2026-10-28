@@ -1,0 +1,20 @@
+# maid-cafe.tokyo のリバースプロキシ。HTTPS(Let's Encrypt)はCaddyが自動で取得・更新する。
+maid-cafe.tokyo {
+	encode zstd gzip
+	header {
+		Strict-Transport-Security "max-age=300"   # 動作確認後に長くする
+		X-Content-Type-Options nosniff
+		Referrer-Policy strict-origin-when-cross-origin
+	}
+	# データ分析(realdata.pro の rrd-server)
+	handle_path /data/* {
+		reverse_proxy 127.0.0.1:4701
+	}
+	# 先生UIとAPI(maid-cafe-english のサーバー)
+	handle {
+		reverse_proxy 127.0.0.1:4601
+	}
+}
+www.maid-cafe.tokyo {
+	redir https://maid-cafe.tokyo{uri} permanent
+}

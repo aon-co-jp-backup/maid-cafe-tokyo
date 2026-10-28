@@ -1,0 +1,5 @@
+[Unit]
+Description=maid-cafe.tokyo 毎朝の自動更新
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/flock -n /run/maid-update.lock /srv/maid-cafe/update.sh

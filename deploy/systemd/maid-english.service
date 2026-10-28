@@ -1,0 +1,18 @@
+[Unit]
+Description=maid-cafe.tokyo 先生UI/API (open-english-server)
+After=network-online.target
+[Service]
+User=maid
+WorkingDirectory=/srv/maid-cafe/current/open-english
+EnvironmentFile=/etc/maid-cafe/english.env
+Environment=OPEN_ENGLISH_SERVER_BIND=127.0.0.1:4601
+Environment=OPEN_ENGLISH_SERVER_ROOT=/srv/maid-cafe/current/open-english/web
+ExecStart=/srv/maid-cafe/current/bin/open-english-server
+Restart=on-failure
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+ReadWritePaths=/var/lib/maid-cafe
+[Install]
+WantedBy=multi-user.target

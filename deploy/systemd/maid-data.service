@@ -1,0 +1,17 @@
+[Unit]
+Description=maid-cafe.tokyo データ分析 (rrd-server)
+After=network-online.target
+[Service]
+User=maid
+EnvironmentFile=/etc/maid-cafe/data.env
+Environment=RRD_BIND=127.0.0.1:4701
+Environment=RRD_DATA_DIR=/var/lib/maid-cafe/data
+ExecStart=/srv/maid-cafe/current/bin/rrd-server
+Restart=on-failure
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+ReadWritePaths=/var/lib/maid-cafe
+[Install]
+WantedBy=multi-user.target

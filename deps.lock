@@ -1,0 +1,11 @@
+# maid-cafe.tokyo が依存する兄弟リポジトリ(コミット固定)。更新は rev を書き換え、テストが通ってからコミットする。
+# 名前 URL コミット(2026-10-28 時点の各 master 最新)
+RPoem https://github.com/aon-co-jp/RPoem.git d9340329425fb03beb5ea242dbf5c121ea03b720
+RS-SmartTCP https://github.com/aon-co-jp/RS-SmartTCP.git c34988779fab8f262b52da68eee5402fde74a8ae
+open-cpu https://github.com/aon-co-jp/open-cpu.git 1ac7b45a635d105dd7177c7f14e1db6f91966eb3
+open-raid-z https://github.com/aon-co-jp/open-raid-z.git 3ebe82ca6c51579019f77625d686a84aa58917a0
+open-web-server https://github.com/aon-co-jp/open-web-server.git ca6dac6c28f85eecb2b8b281a027310e628a7d42
+RS-JSON https://github.com/aon-co-jp/RS-JSON.git 057bded762911e8a4dcbccc3d06240074305bea5
+open-cuda https://github.com/aon-co-jp/open-cuda.git ec189208d72763bef9c5dc118566b8b62144c6bd
+maid-cafe-english https://github.com/aon-co-jp/maid-cafe-english.git e495409d7a2b241b6c2c086d6b83b76820604e42
+realdata.pro https://github.com/aon-co-jp/realdata.pro.git 0cbe07d9781e47883c1aad72c46c200a6828d7a7
