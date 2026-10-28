@@ -1,0 +1,37 @@
+name: build-release
+on:
+  push:
+    branches: [main]
+    tags: ["v*"]
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - run: sudo apt-get update && sudo apt-get install -y cmake pkg-config libssl-dev
+      - uses: actions/cache@v4
+        with:
+          path: |
+            work/open-english/server/target
+            work/realdata.pro/target
+            ~/.cargo/registry
+          key: build-${{ hashFiles('deps.lock') }}
+          restore-keys: build-
+      - run: scripts/build.sh
+      - run: scripts/smoke.sh
+      - uses: actions/upload-artifact@v4
+        with:
+          name: maid-cafe-tokyo-linux-x86_64
+          path: dist/maid-cafe-tokyo-linux-x86_64.tar.gz
+      - name: リリースに添付(vタグのみ)
+        if: startsWith(github.ref, 'refs/tags/v')
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1 || gh release create "$GITHUB_REF_NAME" --title "$GITHUB_REF_NAME" --notes "Linux x86_64 成果物。未検証の項目は README を参照。"
+          gh release upload "$GITHUB_REF_NAME" dist/maid-cafe-tokyo-linux-x86_64.tar.gz dist/SHA256SUMS --clobber
