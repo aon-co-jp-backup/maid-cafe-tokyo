@@ -10,7 +10,7 @@ grep -vE '^\s*(#|$)' "$here/deps.lock" | while read -r name url rev; do
   git -C "$d" -c advice.detachedHead=false checkout --quiet "$rev"
 done
 ln -sfn "$W" "$W/realdata.pro/.deps"
-cargo build --release --manifest-path "$W/open-english/server/Cargo.toml"
+cargo build --release --manifest-path "$W/open-english/server/Cargo.toml" ${KOKORO:+--features kokoro}   # KOKORO=1 でKokoro(日本語音声)入り(VPS本番と同じ)
 cargo build --release --manifest-path "$W/realdata.pro/Cargo.toml" -p rrd-server
 out="$here/dist/pkg"; rm -rf "$here/dist"; mkdir -p "$out/bin" "$out/open-english"
 cp "$W/open-english/server/target/release/open-english-server" "$out/bin/"

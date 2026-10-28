@@ -23,6 +23,8 @@ jobs:
           key: build-${{ hashFiles('deps.lock') }}
           restore-keys: build-
       - run: scripts/build.sh
+        env:
+          KOKORO: "1"
       - run: scripts/smoke.sh
       - uses: actions/upload-artifact@v4
         with:
