@@ -5,7 +5,7 @@ set -euo pipefail
 here="$(cd "$(dirname "$0")/.." && pwd)"; W="${W:-$here/work}"; mkdir -p "$W"
 grep -vE '^\s*(#|$)' "$here/deps.lock" | while read -r name url rev; do
   d="$W/$name"; [ "$name" = maid-cafe-english ] && d="$W/open-english"
-  [ -d "$d/.git" ] || git clone --quiet --filter=blob:none --no-checkout "$url" "$d"
+  if [ ! -d "$d/.git" ]; then mkdir -p "$d"; git -C "$d" init -q; git -C "$d" remote add origin "$url"; fi  # キャッシュで先にtarget/だけがある場合も動くように
   git -C "$d" fetch --quiet origin "$rev" 2>/dev/null || git -C "$d" fetch --quiet origin
   git -C "$d" -c advice.detachedHead=false checkout --quiet "$rev"
 done
